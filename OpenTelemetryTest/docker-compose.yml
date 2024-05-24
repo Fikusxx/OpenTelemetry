@@ -11,6 +11,9 @@ services:
       - 8080:8080
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://dashboard:18889
+      - OTEL_SERVICE_NAME=MyFancyName
+      - OTEL_RESOURCE_ATTRIBUTES=deployment.environment=staging,service.version=1.0.0
+      - OTEL_EXPORTER_OTLP_TIMEOUT=1000
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
     networks:
