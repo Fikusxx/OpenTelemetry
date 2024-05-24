@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(options =>
     {
-        options.AddService(Diagnostics.ServiceName);
+        options.AddService(serviceName: Diagnostics.ServiceName, serviceVersion: "1.0");
     })
     .WithMetrics(metrics =>
     {
@@ -21,31 +21,22 @@ builder.Services.AddOpenTelemetry()
             .AddHttpClientInstrumentation();
 
         metrics.AddMeter(Diagnostics.Meter.Name);
-
-        metrics.AddOtlpExporter(options =>
-        {
-            // options.Endpoint = new Uri("http://localhost:18889");
-            // or set OTEL_EXPORTER_OTLP_ENDPOINT in env variables
-        });
     })
     .WithTracing(tracing =>
     {
         tracing.AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation();
-
-        tracing.AddOtlpExporter(options =>
-        {
-            // options.Endpoint = new Uri("http://localhost:18889");
-        });
     });
 
 builder.Logging.AddOpenTelemetry(logging =>
 {
-    logging.AddOtlpExporter(options =>
-    {
-        // options.Endpoint = new Uri("http://localhost:18889");
-    });
+    logging.IncludeScopes = true;
+    logging.IncludeFormattedMessage = true;
 });
+
+builder.Services.Configure<OpenTelemetryLoggerOptions>(x => x.AddOtlpExporter());
+builder.Services.ConfigureOpenTelemetryMeterProvider(x => x.AddOtlpExporter());
+builder.Services.ConfigureOpenTelemetryTracerProvider(x => x.AddOtlpExporter());
 
 var app = builder.Build();
 
