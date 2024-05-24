@@ -17,7 +17,8 @@ public sealed class MyController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        logger.LogInformation("WOW");
+        logger.LogInformation("MANUAL: Request started at {Date}", DateTime.UtcNow.Date);
+        logger.LogUselessInfo(DateTime.UtcNow.Date);
         
         Diagnostics.Counter.Add(1,
             new KeyValuePair<string, object?>("type", "MyType"),
@@ -26,4 +27,10 @@ public sealed class MyController : ControllerBase
         
         return Ok("privet");
     }
+}
+
+public static partial class Log
+{
+    [LoggerMessage(LogLevel.Information, "CACHED: Request started at {date}")]
+    public static partial void LogUselessInfo(this ILogger logger, DateTime date);
 }

@@ -38,6 +38,8 @@ builder.Services.Configure<OpenTelemetryLoggerOptions>(x => x.AddOtlpExporter())
 builder.Services.ConfigureOpenTelemetryMeterProvider(x => x.AddOtlpExporter());
 builder.Services.ConfigureOpenTelemetryTracerProvider(x => x.AddOtlpExporter());
 
+builder.Services.Configure<HostOptions>(x => x.ShutdownTimeout = TimeSpan.FromSeconds(30));
+
 var app = builder.Build();
 
 
