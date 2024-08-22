@@ -2,7 +2,6 @@ using MassTransit.Logging;
 using MassTransit.Monitoring;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetryTest.Meters;
 
@@ -33,7 +32,7 @@ builder.Services.AddOpenTelemetry()
     {
         tracing.AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation();
-        
+
         tracing.AddSource(DiagnosticHeaders.DefaultListenerName);
     });
 
@@ -50,7 +49,6 @@ builder.Services.ConfigureOpenTelemetryTracerProvider(x => x.AddOtlpExporter());
 builder.Services.Configure<HostOptions>(x => x.ShutdownTimeout = TimeSpan.FromSeconds(30));
 
 var app = builder.Build();
-
 
 
 app.UseSwagger();

@@ -27,6 +27,18 @@ public sealed class MyController : ControllerBase
         
         return Ok("privet");
     }
+
+    [HttpGet]
+    [Route("Test")]
+    public async Task<IActionResult> Test()
+    {
+
+        return Ok(new
+        {
+            Value = 123,
+            NullValue = (string?)null
+        });
+    }
 }
 
 public static partial class Log

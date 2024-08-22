@@ -1,6 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetryTest", "OpenTelemetryTest\OpenTelemetryTest.csproj", "{904ACB34-8810-4866-9D69-07B30697599E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireDashboard", "AspireDashboard\AspireDashboard.csproj", "{904ACB34-8810-4866-9D69-07B30697599E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4A7A2271-6D9E-48B5-9BDF-276E42D1207A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C02DBC26-4612-4EAC-A733-8061F2692F34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F5A0E1B8-8418-4279-A7E0-846DEDB70D6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
