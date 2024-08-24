@@ -1,0 +1,136 @@
+services:
+  
+  orders.api:
+    image: orders.api
+    container_name: orders.api
+    restart: always
+    build:
+      context: .
+      dockerfile: src/Orders/Dockerfile
+    environment:
+      ConnectionStrings__OrdersDb: Host=orders.db;Port=5432;Database=Orders;Username=postgres;Password=postgres
+      ConnectionStrings__RabbitMq: amqp://guest:guest@rabbitmq:5672/
+      OrderValidator__Url: http://order.validator.service:8080
+      OTLP_Endpoint: http://otel-collector:4317
+    ports:
+      - "8080:8080"
+    depends_on:
+      - orders.db
+      - rabbitmq
+      - order.validator.service
+
+
+  orders.db:
+    image: postgres
+    container_name: orders.db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Orders
+    ports:
+      - "5432:5432"
+  
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+  orders.view.service:
+    image: orders.view.service
+    container_name: orders.view.service
+    build:
+      context: .
+      dockerfile: src/OrdersView/Dockerfile
+    restart: always
+    environment:
+      ConnectionStrings__OrdersDb: Host=orders.view.db;Port=5432;Database=OrdersView;Username=postgres;Password=postgres
+      ConnectionStrings__OrdersCache: orders.view.cache:6379
+      ConnectionStrings__RabbitMq: amqp://guest:guest@rabbitmq:5672/
+      OTLP_Endpoint: http://otel-collector:4317
+    ports:
+      - "8081:8080"
+    depends_on:
+      - orders.view.db
+      - orders.view.cache
+      - rabbitmq
+
+
+  orders.view.db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: OrdersView
+    ports:
+      - "5433:5432"
+
+  orders.view.cache:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  order.validator.service:
+    image: order.validator.service
+    container_name: order.validator.service
+    restart: always
+    build:
+      context: .
+      dockerfile: src/OrdersValidator/Dockerfile
+    environment:
+      OTLP_Endpoint: http://otel-collector:4317
+    ports:
+      - "8083:8080"
+  
+  jaeger:
+    image: jaegertracing/all-in-one:1.58.0
+    ports:
+      - "16686:16686"
+  
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+  
+  
+  grafana:
+    image: grafana/grafana:10.4.4
+    volumes:
+      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    ports:
+      - "3000:3000"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.103.0
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel/config.yaml
+      - ./log:/log/otel
+    command: --config /etc/otel/config.yaml
+    environment:
+      JAEGER_ENDPOINT: "jaeger:4317"
+      LOKI_ENDPOINT : "loki:3100/loki/api/v1/push"
+    ports:
+      - "8889:8889"
+      - "13133:13133"
+      - "55679:55679"
+      - "4317:4317" # otlp receiver
+    depends_on:
+      - jaeger
+      - prometheus
+      - loki
+  
+  
+  loki:
+    image: grafana/loki:2.7.1
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml

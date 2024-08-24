@@ -1,0 +1,6 @@
+@OrdersValidator_HostAddress = http://localhost:5179
+
+GET {{OrdersValidator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

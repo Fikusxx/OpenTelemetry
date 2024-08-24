@@ -1,0 +1,6 @@
+@OrdersView_HostAddress = http://localhost:8081
+
+GET {{OrdersView_HostAddress}}/orders/1fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
+
+###

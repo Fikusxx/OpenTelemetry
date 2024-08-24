@@ -4,9 +4,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireDashboard", "AspireDa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4A7A2271-6D9E-48B5-9BDF-276E42D1207A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C02DBC26-4612-4EAC-A733-8061F2692F34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders", "src\Orders\Orders.csproj", "{7170A6E9-F18A-46B1-95BC-86E8E81C4344}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F5A0E1B8-8418-4279-A7E0-846DEDB70D6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersView", "src\OrdersView\OrdersView.csproj", "{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersValidator", "src\OrdersValidator\OrdersValidator.csproj", "{53555AC9-3D7E-4013-9A17-1E85230650EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E66B5C23-2E40-43A9-B86A-EE4936A545F9}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		grafana-datasources.yml = grafana-datasources.yml
+		otel-collector-config.yml = otel-collector-config.yml
+		prometheus.yml = prometheus.yml
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +29,22 @@ Global
 		{904ACB34-8810-4866-9D69-07B30697599E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{904ACB34-8810-4866-9D69-07B30697599E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{904ACB34-8810-4866-9D69-07B30697599E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7170A6E9-F18A-46B1-95BC-86E8E81C4344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7170A6E9-F18A-46B1-95BC-86E8E81C4344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7170A6E9-F18A-46B1-95BC-86E8E81C4344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7170A6E9-F18A-46B1-95BC-86E8E81C4344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53555AC9-3D7E-4013-9A17-1E85230650EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53555AC9-3D7E-4013-9A17-1E85230650EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53555AC9-3D7E-4013-9A17-1E85230650EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53555AC9-3D7E-4013-9A17-1E85230650EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7170A6E9-F18A-46B1-95BC-86E8E81C4344} = {4A7A2271-6D9E-48B5-9BDF-276E42D1207A}
+		{B0CAF88E-65A2-4BB1-8798-4D88687D0E6B} = {4A7A2271-6D9E-48B5-9BDF-276E42D1207A}
+		{53555AC9-3D7E-4013-9A17-1E85230650EA} = {4A7A2271-6D9E-48B5-9BDF-276E42D1207A}
 	EndGlobalSection
 EndGlobal

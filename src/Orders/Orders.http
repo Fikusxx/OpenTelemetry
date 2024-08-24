@@ -1,0 +1,13 @@
+@Orders_HostAddress = http://localhost:8080
+
+# hold on few seconds (~10) on creating an order, let MT connect to the broker
+POST {{Orders_HostAddress}}/orders/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "1fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "number": "Number #1"
+}
+
+###

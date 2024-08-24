@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrderValidators";
+
+package order_validator;
+
+service OrderValidator {
+  rpc Validate (OrderValidationRequest) returns (OrderValidationReply);
+}
+
+message OrderValidationRequest {
+  string number = 1;
+}
+
+message OrderValidationReply {
+  ValidationResult validation_result = 1;
+}
+
+enum ValidationResult {
+  Passed = 0;
+  Failed = 1;
+}
+
